@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-q57*9wo!#+lx6em0e@r61(8*%&%52aamv)c)(5ab#nsrye_fbp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['loginsystem-cw.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -38,16 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
-    
     'crispy_forms',
     'crispy_bootstrap5',
-
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-
 ]
 
 SITE_ID = 1
@@ -98,14 +90,9 @@ DATABASES = {
         'PASSWORD': '44cfe8cb19ce1977bc2e3105c6e46bed7e5f2c5b2e356441738028edbff42e3d',
         'HOST': 'ec2-54-87-179-4.compute-1.amazonaws.com',
         'PORT': '5432'
-        
+
     }
 }
-
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
 
 
 # Password validation
@@ -132,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 
