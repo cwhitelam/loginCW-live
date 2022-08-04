@@ -3,10 +3,14 @@ from .forms import RegisterForm, PostForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User, Group
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.conf import settings
 from .models import Post
 
 
 @login_required(login_url="/login")
+@permission_required("main.add_post", login_url="/login", raise_exception=True)
 def home(request):
     posts = Post.objects.all()
 
@@ -23,6 +27,7 @@ def home(request):
             if user and request.user.is_staff:
                 try:
                     group = Group.objects.get(name='default')
+                    group.user_set.add(user)
                     group.user_set.remove(user)
                 except:
                     pass
@@ -63,3 +68,10 @@ def sign_up(request):
         form = RegisterForm()
 
     return render(request, 'registration/sign_up.html', {"form": form})
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def save_profile(sender, instance, created, **kwargs):
+    if created:
+        g1 = Group.objects.get(name='default')
+        instance.groups.add(g1)
